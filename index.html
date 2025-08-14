@@ -38,8 +38,150 @@
       color: var(--text);
     }
     
-    .app-container {
+    /* صفحة تسجيل الدخول */
+    .auth-container {
       display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: url('https://www.transparenttextures.com/patterns/dark-geometric.png');
+    }
+    
+    .auth-box {
+      background-color: var(--sidebar);
+      border-radius: 15px;
+      padding: 30px;
+      width: 100%;
+      max-width: 400px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+      border: 1px solid var(--border);
+    }
+    
+    .auth-header {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+    
+    .auth-logo {
+      width: 60px;
+      height: 60px;
+      margin-bottom: 15px;
+      filter: drop-shadow(0 0 10px rgba(99, 102, 241, 0.5));
+    }
+    
+    .auth-title {
+      font-size: 1.5rem;
+      font-weight: bold;
+      background: linear-gradient(to right, var(--accent), var(--accent-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 10px;
+    }
+    
+    .auth-subtitle {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+    
+    .auth-form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+    
+    .auth-input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    
+    .auth-input-group label {
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+    
+    .auth-input {
+      padding: 12px 15px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background-color: var(--card);
+      color: var(--text);
+      font-family: inherit;
+      font-size: 1rem;
+    }
+    
+    .auth-input:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.3);
+    }
+    
+    .auth-btn {
+      padding: 12px;
+      border-radius: 8px;
+      border: none;
+      background: linear-gradient(to right, var(--accent), var(--accent-light));
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-size: 1rem;
+    }
+    
+    .auth-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+    
+    .auth-footer {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+    
+    .auth-toggle {
+      color: var(--accent-light);
+      cursor: pointer;
+      text-decoration: underline;
+    }
+    
+    .auth-toggle:hover {
+      text-decoration: none;
+    }
+    
+    .auth-error {
+      color: var(--error);
+      background-color: rgba(239, 68, 68, 0.1);
+      padding: 10px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      text-align: center;
+      display: none;
+      margin-bottom: 15px;
+    }
+    
+    .guest-btn {
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background-color: transparent;
+      color: var(--text);
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-size: 1rem;
+      margin-top: 10px;
+    }
+    
+    .guest-btn:hover {
+      background-color: rgba(255,255,255,0.05);
+    }
+    
+    /* التطبيق الرئيسي (يظهر بعد التسجيل) */
+    .app-container {
+      display: none;
       height: 100vh;
       overflow: hidden;
     }
@@ -77,6 +219,48 @@
       background: linear-gradient(to right, var(--accent), var(--accent-light));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
+    }
+    
+    .user-profile {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px;
+      border-radius: 8px;
+      margin-bottom: 15px;
+      background-color: rgba(255,255,255,0.05);
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    
+    .user-profile:hover {
+      background-color: rgba(99, 102, 241, 0.1);
+    }
+    
+    .user-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background-color: var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+    }
+    
+    .user-info {
+      flex: 1;
+    }
+    
+    .user-name {
+      font-weight: bold;
+      font-size: 0.9rem;
+    }
+    
+    .user-email {
+      font-size: 0.7rem;
+      color: var(--muted);
     }
     
     .new-chat-btn {
@@ -546,6 +730,11 @@
     
     /* وضع الجوال */
     @media (max-width: 768px) {
+      .auth-box {
+        width: 90%;
+        padding: 20px;
+      }
+      
       .sidebar {
         position: fixed;
         top: 0;
@@ -591,12 +780,84 @@
   </style>
 </head>
 <body>
-  <div class="app-container">
+  <!-- صفحة تسجيل الدخول -->
+  <div class="auth-container" id="auth-container">
+    <div class="auth-box">
+      <div class="auth-header">
+        <img src="https://www.gstatic.com/lamda/images/gemini_sparkle_v002_d4735304ff6292a690345.svg" alt="شعار أورنمو" class="auth-logo">
+        <div class="auth-title">أورنمو</div>
+        <div class="auth-subtitle">منبع القانون - الذكاء الاصطناعي القانوني</div>
+      </div>
+      
+      <div class="auth-error" id="auth-error"></div>
+      
+      <!-- نموذج تسجيل الدخول -->
+      <form class="auth-form" id="login-form">
+        <div class="auth-input-group">
+          <label for="login-email">البريد الإلكتروني</label>
+          <input type="email" id="login-email" class="auth-input" required>
+        </div>
+        
+        <div class="auth-input-group">
+          <label for="login-password">كلمة المرور</label>
+          <input type="password" id="login-password" class="auth-input" required>
+        </div>
+        
+        <button type="submit" class="auth-btn">تسجيل الدخول</button>
+        
+        <div class="auth-footer">
+          ليس لديك حساب؟ <span class="auth-toggle" id="show-register">إنشاء حساب</span>
+        </div>
+      </form>
+      
+      <!-- نموذج إنشاء حساب -->
+      <form class="auth-form" id="register-form" style="display: none;">
+        <div class="auth-input-group">
+          <label for="register-name">الاسم الكامل</label>
+          <input type="text" id="register-name" class="auth-input" required>
+        </div>
+        
+        <div class="auth-input-group">
+          <label for="register-email">البريد الإلكتروني</label>
+          <input type="email" id="register-email" class="auth-input" required>
+        </div>
+        
+        <div class="auth-input-group">
+          <label for="register-password">كلمة المرور</label>
+          <input type="password" id="register-password" class="auth-input" required>
+        </div>
+        
+        <div class="auth-input-group">
+          <label for="register-confirm">تأكيد كلمة المرور</label>
+          <input type="password" id="register-confirm" class="auth-input" required>
+        </div>
+        
+        <button type="submit" class="auth-btn">إنشاء حساب</button>
+        
+        <div class="auth-footer">
+          لديك حساب بالفعل؟ <span class="auth-toggle" id="show-login">تسجيل الدخول</span>
+        </div>
+      </form>
+      
+      <button class="guest-btn" id="guest-btn">الدخول كزائر</button>
+    </div>
+  </div>
+  
+  <!-- التطبيق الرئيسي (يظهر بعد التسجيل) -->
+  <div class="app-container" id="app-container">
     <!-- الشريط الجانبي -->
     <div class="sidebar" id="sidebar">
       <div class="sidebar-header">
         <img src="https://www.gstatic.com/lamda/images/gemini_sparkle_v002_d4735304ff6292a690345.svg" alt="شعار أورنمو" class="sidebar-logo">
         <div class="sidebar-title">أورنمو</div>
+      </div>
+      
+      <div class="user-profile" id="user-profile">
+        <div class="user-avatar" id="user-avatar">ز</div>
+        <div class="user-info">
+          <div class="user-name" id="user-name">زائر</div>
+          <div class="user-email" id="user-email">غير مسجل</div>
+        </div>
       </div>
       
       <button class="new-chat-btn" id="new-chat-btn">
@@ -721,13 +982,14 @@
   <script>
     // ============== المفاتيح المضمنة ==============
     const API_KEYS = {
-      GEMINI: "AIzaSyByCQGeLs10jLqqdJvFK3tBIregPGadou4", // 🔴 استبدل بمفتاح Gemini الفعلي
-      DEEPSEEK: "sk-131c1199d14b45918b7ee661848089bd", // 🔴 استبدل بمفتاح DeepSeek الفعلي
-      POE: "SfOCj8yrXF4cH-gGvS08Ssq65F1tsncqp8HZRBRdngM" // 🔴 استبدل بمفتاح Poe الفعلي
+      GEMINI: "AIzaSyDxxxxxxxxxxxxxxxxxxxxxxxxxxx", // 🔴 استبدل بمفتاح Gemini الفعلي
+      DEEPSEEK: "dsk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", // 🔴 استبدل بمفتاح DeepSeek الفعلي
+      POE: "poe-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" // 🔴 استبدل بمفتاح Poe الفعلي
     };
     
     // ============== إدارة الحالة ==============
     let currentState = {
+      user: null, // { id, name, email, isGuest }
       activeChat: '1',
       activeMode: 'balanced',
       chats: {
@@ -782,6 +1044,13 @@
     
     // ============== تهيئة الصفحة ==============
     document.addEventListener('DOMContentLoaded', () => {
+      // تحقق مما إذا كان المستخدم مسجل الدخول بالفعل (من localStorage)
+      const savedUser = localStorage.getItem('ornamo_user');
+      if (savedUser) {
+        currentState.user = JSON.parse(savedUser);
+        showApp();
+      }
+      
       // ضبط ارتفاع حقل النص تلقائيًا
       const textarea = document.getElementById('prompt');
       textarea.addEventListener('input', function() {
@@ -794,12 +1063,18 @@
         document.getElementById('submit-btn').disabled = this.value.trim() === '' && 
           document.getElementById('file-preview').style.display === 'none';
       });
-      
-      // تحميل المحادثة النشطة
-      loadChat(currentState.activeChat);
     });
 
     // ============== عناصر الواجهة ==============
+    const authContainer = document.getElementById('auth-container');
+    const appContainer = document.getElementById('app-container');
+    const loginForm = document.getElementById('login-form');
+    const registerForm = document.getElementById('register-form');
+    const showRegister = document.getElementById('show-register');
+    const showLogin = document.getElementById('show-login');
+    const guestBtn = document.getElementById('guest-btn');
+    const authError = document.getElementById('auth-error');
+    
     const modelInput = document.getElementById('model');
     const promptInput = document.getElementById('prompt');
     const submitBtn = document.getElementById('submit-btn');
@@ -815,6 +1090,10 @@
     const newChatBtn = document.getElementById('new-chat-btn');
     const modeButtons = document.querySelectorAll('.mode-btn');
     const chatHistoryList = document.getElementById('chat-history-list');
+    const userProfile = document.getElementById('user-profile');
+    const userAvatar = document.getElementById('user-avatar');
+    const userName = document.getElementById('user-name');
+    const userEmail = document.getElementById('user-email');
     
     let currentFile = null;
     
@@ -823,6 +1102,12 @@
       errorDiv.textContent = message;
       errorDiv.style.display = 'block';
       setTimeout(() => errorDiv.style.display = 'none', 5000);
+    }
+    
+    function showAuthError(message) {
+      authError.textContent = message;
+      authError.style.display = 'block';
+      setTimeout(() => authError.style.display = 'none', 5000);
     }
     
     function showLoading(show) {
@@ -1030,6 +1315,29 @@
       submitBtn.disabled = true;
     }
     
+    function showApp() {
+      authContainer.style.display = 'none';
+      appContainer.style.display = 'flex';
+      
+      // تحديث معلومات المستخدم في الشريط الجانبي
+      if (currentState.user) {
+        if (currentState.user.isGuest) {
+          userName.textContent = 'زائر';
+          userEmail.textContent = 'غير مسجل';
+          userAvatar.textContent = 'ز';
+          userAvatar.style.backgroundColor = '#6B7280';
+        } else {
+          userName.textContent = currentState.user.name;
+          userEmail.textContent = currentState.user.email;
+          userAvatar.textContent = currentState.user.name.charAt(0);
+          userAvatar.style.backgroundColor = '#6366F1';
+        }
+      }
+      
+      // تحميل المحادثة النشطة
+      loadChat(currentState.activeChat);
+    }
+    
     // ============== اتصالات API ==============
     async function callAIAPI(model, prompt, file) {
       try {
@@ -1190,6 +1498,90 @@
     }
     
     // ============== أحداث الواجهة ==============
+    // أحداث تسجيل الدخول والتسجيل
+    showRegister.addEventListener('click', (e) => {
+      e.preventDefault();
+      loginForm.style.display = 'none';
+      registerForm.style.display = 'flex';
+    });
+    
+    showLogin.addEventListener('click', (e) => {
+      e.preventDefault();
+      registerForm.style.display = 'none';
+      loginForm.style.display = 'flex';
+    });
+    
+    loginForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      const email = document.getElementById('login-email').value;
+      const password = document.getElementById('login-password').value;
+      
+      // هنا يجب إضافة التحقق من صحة البيانات واتصال بالخادم
+      // هذا مثال فقط للتوضيح
+      if (email && password) {
+        currentState.user = {
+          id: Date.now().toString(),
+          name: 'مستخدم أورنمو',
+          email: email,
+          isGuest: false
+        };
+        
+        // حفظ بيانات المستخدم في localStorage
+        localStorage.setItem('ornamo_user', JSON.stringify(currentState.user));
+        
+        showApp();
+      } else {
+        showAuthError('الرجاء إدخال البريد الإلكتروني وكلمة المرور');
+      }
+    });
+    
+    registerForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      const name = document.getElementById('register-name').value;
+      const email = document.getElementById('register-email').value;
+      const password = document.getElementById('register-password').value;
+      const confirm = document.getElementById('register-confirm').value;
+      
+      // التحقق من صحة البيانات
+      if (!name || !email || !password || !confirm) {
+        showAuthError('الرجاء ملء جميع الحقول');
+        return;
+      }
+      
+      if (password !== confirm) {
+        showAuthError('كلمة المرور وتأكيدها غير متطابقين');
+        return;
+      }
+      
+      // هنا يجب إضافة اتصال بالخادم للتسجيل
+      // هذا مثال فقط للتوضيح
+      currentState.user = {
+        id: Date.now().toString(),
+        name: name,
+        email: email,
+        isGuest: false
+      };
+      
+      // حفظ بيانات المستخدم في localStorage
+      localStorage.setItem('ornamo_user', JSON.stringify(currentState.user));
+      
+      showApp();
+    });
+    
+    guestBtn.addEventListener('click', () => {
+      currentState.user = {
+        id: 'guest-' + Date.now().toString(),
+        name: 'زائر',
+        email: 'غير مسجل',
+        isGuest: true
+      };
+      
+      // لا نحفظ بيانات الزائر في localStorage
+      showApp();
+    });
+    
     // حدث الإرسال
     submitBtn.addEventListener('click', async () => {
       const model = modelInput.value;
@@ -1290,6 +1682,20 @@
           !sidebar.contains(e.target) && 
           e.target !== menuToggle) {
         sidebar.classList.remove('open');
+      }
+    });
+    
+    // عرض ملف تعريف المستخدم
+    userProfile.addEventListener('click', () => {
+      if (currentState.user && !currentState.user.isGuest) {
+        if (confirm('هل تريد تسجيل الخروج؟')) {
+          localStorage.removeItem('ornamo_user');
+          location.reload();
+        }
+      } else {
+        if (confirm('الزائرون لا يمكنهم حفظ محادثاتهم. هل تريد تسجيل الدخول أو إنشاء حساب؟')) {
+          location.reload();
+        }
       }
     });
   </script>
