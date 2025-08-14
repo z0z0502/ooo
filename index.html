@@ -168,6 +168,16 @@
       min-height: 100px;
       white-space: pre-wrap;
     }
+    
+    .api-note {
+      font-size: 0.8rem;
+      color: var(--muted);
+      text-align: center;
+      margin-top: 10px;
+      padding: 8px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 8px;
+    }
   </style>
 </head>
 <body>
@@ -187,9 +197,6 @@
     <div class="card">
       <div id="error-message" class="error-message"></div>
       
-      <label for="api-key">مفتاح API</label>
-      <input type="text" id="api-key" placeholder="أدخل مفتاح Gemini API هنا">
-      
       <label for="model">نموذج الذكاء الاصطناعي</label>
       <input type="text" id="model" value="gemini-1.5-flash">
       
@@ -198,47 +205,54 @@
       
       <button id="submit-btn">إرسال الاستعلام</button>
       
+      <div class="api-note">
+        ⚠ المفتاح مضمن في الكود (للتجارب المحلية فقط)
+      </div>
+      
       <div class="output" id="output">النتيجة ستظهر هنا...</div>
     </div>
     
     <div class="legal-footer">
-      <p>جميع الحقوق محفوظة &copy; <span id="current-year"></span> نظام أورنمو - منبع القانون</p>
+      <p>جميع الحقوق محفوظة © <span id="current-year"></span> نظام أورنمو - منبع القانون</p>
       <p>هذه الواجهة تتصل مباشرة بـ <a href="https://gemini.google.com/" target="_blank">Google Gemini API</a></p>
     </div>
   </div>
 
   <script>
-    // عرض السنة الحالية
-    document.getElementById('current-year').textContent = new Date().getFullYear();
+    // ============== المفتاح المضمن ==============
+    const EMBEDDED_API_KEY = "AIzaSyByCQGeLs10jLqqdJvFK3tBIregPGadou4"; // 🔴 استبدل هذا بمفتاحك الفعلي
     
-    // عناصر الواجهة
-    const apiKeyInput = document.getElementById('api-key');
+    // ============== تهيئة الصفحة ==============
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('current-year').textContent = new Date().getFullYear();
+    });
+
+    // ============== عناصر الواجهة ==============
     const modelInput = document.getElementById('model');
     const promptInput = document.getElementById('prompt');
     const submitBtn = document.getElementById('submit-btn');
     const outputDiv = document.getElementById('output');
     const errorDiv = document.getElementById('error-message');
     
-    // دالة لعرض الأخطاء
+    // ============== دوال مساعدة ==============
     function showError(message) {
       errorDiv.textContent = message;
       errorDiv.style.display = 'block';
       setTimeout(() => errorDiv.style.display = 'none', 5000);
     }
     
-    // دالة لعرض حالة التحميل
     function showLoading(show) {
       if (show) {
         outputDiv.innerHTML = '<div class="spinner"></div><p style="text-align:center">جاري معالجة طلبك...</p>';
       }
     }
     
-    // دالة للاتصال بـ Gemini API
-    async function callGeminiAPI(apiKey, model, prompt) {
+    // ============== اتصال Gemini API ==============
+    async function callGeminiAPI(model, prompt) {
       try {
         showLoading(true);
         
-        const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
+        const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${EMBEDDED_API_KEY}`;
         
         const response = await fetch(endpoint, {
           method: 'POST',
@@ -255,30 +269,22 @@
         });
         
         if (!response.ok) {
-          throw new Error(`خطأ في الاتصال: ${response.status}`);
+          const errorData = await response.json();
+          throw new Error(errorData.error?.message || `خطأ في الاتصال: ${response.status}`);
         }
         
         const data = await response.json();
-        
-        // استخراج النص من الاستجابة
-        const text = data?.candidates?.[0]?.content?.parts?.[0]?.text || 'لا يوجد نص في الاستجابة';
-        return text;
+        return data?.candidates?.[0]?.content?.parts?.[0]?.text || 'لا يوجد نص في الاستجابة';
       } catch (error) {
         console.error('Error:', error);
         throw error;
       }
     }
     
-    // حدث النقر على زر الإرسال
+    // ============== حدث الإرسال ==============
     submitBtn.addEventListener('click', async () => {
-      const apiKey = apiKeyInput.value.trim();
       const model = modelInput.value.trim();
       const prompt = promptInput.value.trim();
-      
-      if (!apiKey) {
-        showError('الرجاء إدخال مفتاح API');
-        return;
-      }
       
       if (!prompt) {
         showError('الرجاء إدخال سؤال أو استعلام');
@@ -286,7 +292,7 @@
       }
       
       try {
-        const result = await callGeminiAPI(apiKey, model, prompt);
+        const result = await callGeminiAPI(model, prompt);
         outputDiv.textContent = result;
       } catch (error) {
         showError(`حدث خطأ: ${error.message}`);
@@ -294,7 +300,7 @@
       }
     });
     
-    // السماح بإرسال الاستعلام بالضغط على Enter في حقل النص
+    // السماح بالإرسال بالضغط على Enter
     promptInput.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' && !e.shiftKey) {
         e.preventDefault();
