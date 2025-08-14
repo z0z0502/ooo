@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>أورنمو - منبع القانون | بوابة Gemini</title>
+  <style>
+    :root {
+      --bg: #0b1020;
+      --card: #0f162e;
+      --muted: #8aa0c7;
+      --text: #e7ebf3;
+      --accent: #22d3ee;
+      --border: #213054;
+      --error: #ff6b6b;
+      --success: #6bff6b;
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    html, body {
+      height: 100%;
+      font-family: 'Tajawal', system-ui, -apple-system, sans-serif;
+      background: linear-gradient(180deg, #0b1020, #111a35);
+      color: var(--text);
+    }
+    
+    .container {
+      max-width: 500px;
+      margin: 0 auto;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      justify-content: center;
+    }
+    
+    .logo-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+    
+    .logo-row {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+    
+    .logo {
+      width: 60px;
+      height: 60px;
+      margin-left: 15px;
+    }
+    
+    .system-name {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: var(--accent);
+      margin-bottom: 5px;
+    }
+    
+    .system-subname {
+      font-size: 1rem;
+      color: var(--muted);
+    }
+    
+    .card {
+      background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 25px;
+      box-shadow: 0 10px 40px rgba(0,0,0,.35);
+    }
+    
+    .tabs {
+      display: flex;
+      margin-bottom: 25px;
+      border-bottom: 2px solid var(--border);
+    }
+    
+    .tab {
+      padding: 12px 20px;
+      cursor: pointer;
+      flex: 1;
+      text-align: center;
+      transition: all 0.3s ease;
+      color: var(--muted);
+    }
+    
+    .tab:hover {
+      background: rgba(255,255,255,.05);
+    }
+    
+    .tab.active {
+      border-bottom: 3px solid var(--accent);
+      color: var(--accent);
+      font-weight: bold;
+    }
+    
+    .tab-content {
+      display: none;
+      animation: fadeIn 0.5s ease;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .tab-content.active {
+      display: block;
+    }
+    
+    input {
+      width: 100%;
+      padding: 14px;
+      margin: 12px 0;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: #0a1226;
+      color: #cfe2ff;
+      font-family: inherit;
+    }
+    
+    input:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(34, 211, 238, 0.2);
+    }
+    
+    button {
+      cursor: pointer;
+      border: none;
+      background: var(--accent);
+      color: #062033;
+      padding: 14px 20px;
+      border-radius: 12px;
+      font-weight: bold;
+      width: 100%;
+      margin-top: 15px;
+      font-family: inherit;
+      font-size: 1rem;
+      transition: all 0.3s;
+    }
+    
+    button:hover {
+      filter: brightness(1.1);
+      transform: translateY(-2px);
+    }
+    
+    .visitor-btn {
+      background: #4CAF50;
+      color: white;
+    }
+    
+    .error-message {
+      color: var(--error);
+      background-color: rgba(255, 107, 107, 0.1);
+      padding: 10px;
+      border-radius: 8px;
+      margin: 10px 0;
+      display: none;
+      font-size: 0.9rem;
+    }
+    
+    .spinner {
+      border: 4px solid rgba(255, 255, 255, 0.1);
+      border-top: 4px solid var(--accent);
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      animation: spin 1s linear infinite;
+      margin: 20px auto;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    .legal-footer {
+      margin-top: 25px;
+      font-size: 0.85rem;
+      color: var(--muted);
+      text-align: center;
+      line-height: 1.6;
+    }
+    
+    .legal-footer a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+    
+    .remember-me {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      margin: 15px 0;
+      font-size: 0.9rem;
+    }
+    
+    .remember-me input {
+      width: auto;
+      margin-left: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="logo-container">
+      <div class="logo-row">
+        <img src="https://www.gstatic.com/lamda/images/gemini_sparkle_v002_d4735304ff6292a690345.svg" alt="شعار Gemini" class="logo">
+        <div>
+          <div class="system-name">Gemini</div>
+          <div class="system-subname">بوابة الدخول</div>
+        </div>
+      </div>
+      <div class="system-name">أورنمو</div>
+      <div class="system-subname">منبع القانون</div>
+    </div>
+    
+    <div class="card">
+      <div class="tabs">
+        <div class="tab active" onclick="switchTab('login')">تسجيل الدخول</div>
+        <div class="tab" onclick="switchTab('register')">إنشاء حساب</div>
+      </div>
+      
+      <!-- تسجيل الدخول -->
+      <div id="login-tab" class="tab-content active">
+        <div id="login-error" class="error-message"></div>
+        <input type="text" id="login-email" placeholder="البريد الإلكتروني">
+        <input type="password" id="login-password" placeholder="كلمة المرور">
+        <div class="remember-me">
+          <input type="checkbox" id="rememberMe">
+          <label for="rememberMe">تذكرني</label>
+        </div>
+        <button onclick="login()">تسجيل الدخول</button>
+        <button class="visitor-btn" onclick="enterAsGuest()">الدخول كزائر</button>
+      </div>
+      
+      <!-- إنشاء حساب -->
+      <div id="register-tab" class="tab-content">
+        <div id="register-error" class="error-message"></div>
+        <input type="text" id="reg-name" placeholder="الاسم الكامل">
+        <input type="email" id="reg-email" placeholder="البريد الإلكتروني">
+        <input type="password" id="reg-password" placeholder="كلمة المرور (6 أحرف على الأقل)">
+        <input type="password" id="reg-confirm-password" placeholder="تأكيد كلمة المرور">
+        <button onclick="register()">إنشاء حساب</button>
+      </div>
+      
+      <!-- رسالة التوجيه -->
+      <div id="redirect-message" style="display: none; text-align: center;">
+        <h3 style="margin-bottom: 20px;">جاري التحقق من البيانات...</h3>
+        <div class="spinner"></div>
+        <p style="margin-top: 20px; color: var(--muted);">يتم الآن التحقق من بياناتك وتوجيهك للنظام</p>
+      </div>
+    </div>
+    
+    <div class="legal-footer">
+      <p>بالدخول إلى النظام، أنت توافق على <a href="#">شروط الاستخدام</a> و<a href="#">سياسة الخصوصية</a></p>
+      <p>جميع الحقوق محفوظة &copy; <span id="current-year"></span> نظام أورنمو - منبع القانون</p>
+    </div>
+  </div>
+
+  <script>
+    // ============== الإعدادات الأساسية ==============
+    const DEFAULT_API_KEY = ""; // يمكن وضع مفتاح API هنا للتجارب المحلية
+    
+    // ============== متغيرات الحالة ==============
+    let isAuthenticated = false;
+    
+    // ============== دوال مساعدة ==============
+    function showError(elementId, message) {
+      const errorElement = document.getElementById(elementId);
+      errorElement.textContent = message;
+      errorElement.style.display = 'block';
+      setTimeout(() => errorElement.style.display = 'none', 5000);
+    }
+    
+    function showLoading(show) {
+      document.querySelectorAll('.tab-content').forEach(el => el.style.display = show ? 'none' : '');
+      document.getElementById('redirect-message').style.display = show ? 'block' : 'none';
+    }
+    
+    // ============== اتصال Gemini API ==============
+    async function verifyWithGemini(userData) {
+      try {
+        // استخدام المفتاح من الحقل أو من المتغير الافتراضي
+        const apiKey = DEFAULT_API_KEY || prompt("الرجاء إدخال مفتاح Gemini API:");
+        if (!apiKey) throw new Error("مطلوب مفتاح API");
+        
+        const model = "gemini-1.5-flash";
+        const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
+        
+        const response = await fetch(endpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            contents: [{
+              parts: [{
+                text: `طلب تحقق من مستخدم جديد: ${userData.email || 'زائر'}`
+              }]
+            }]
+          })
+        });
+        
+        if (!response.ok) {
+          throw new Error(`خطأ في التحقق: ${response.status}`);
+        }
+        
+        return true;
+      } catch (error) {
+        console.error("فشل التحقق:", error);
+        throw error;
+      }
+    }
+    
+    // ============== دوال الصفحة الرئيسية ==============
+    function switchTab(tabName) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.tab').forEach(el => el.classList.remove('active'));
+      
+      document.getElementById(`${tabName}-tab`).classList.add('active');
+      event.currentTarget.classList.add('active');
+    }
+    
+    async function login() {
+      const email = document.getElementById('login-email').value.trim();
+      const password = document.getElementById('login-password').value.trim();
+      const rememberMe = document.getElementById('rememberMe').checked;
+      
+      if (!email || !password) {
+        showError('login-error', 'الرجاء إدخال البريد الإلكتروني وكلمة المرور');
+        return;
+      }
+      
+      showLoading(true);
+      
+      try {
+        // التحقق عبر Gemini API
+        const isValid = await verifyWithGemini({ email });
+        
+        if (isValid) {
+          // حفظ حالة المستخدم
+          if (rememberMe) {
+            localStorage.setItem('userEmail', email);
+          } else {
+            sessionStorage.setItem('userEmail', email);
+          }
+          
+          // توجيه المستخدم بعد 2 ثانية
+          setTimeout(() => {
+            window.location.href = "dashboard.html";
+          }, 2000);
+        }
+      } catch (error) {
+        showLoading(false);
+        showError('login-error', 'فشل التحقق من البيانات. يرجى المحاولة لاحقاً.');
+      }
+    }
+    
+    async function register() {
+      const name = document.getElementById('reg-name').value.trim();
+      const email = document.getElementById('reg-email').value.trim();
+      const password = document.getElementById('reg-password').value.trim();
+      const confirmPassword = document.getElementById('reg-confirm-password').value.trim();
+      
+      if (!name || !email || !password || !confirmPassword) {
+        showError('register-error', 'الرجاء ملء جميع الحقول المطلوبة');
+        return;
+      }
+      
+      if (password.length < 6) {
+        showError('register-error', 'كلمة المرور يجب أن تحتوي على 6 أحرف على الأقل');
+        return;
+      }
+      
+      if (password !== confirmPassword) {
+        showError('register-error', 'كلمة المرور غير متطابقة');
+        return;
+      }
+      
+      showLoading(true);
+      
+      try {
+        // التحقق عبر Gemini API
+        const isValid = await verifyWithGemini({ name, email });
+        
+        if (isValid) {
+          // حفظ بيانات المستخدم
+          localStorage.setItem('userEmail', email);
+          localStorage.setItem('userName', name);
+          
+          // توجيه المستخدم بعد 2 ثانية
+          setTimeout(() => {
+            window.location.href = "dashboard.html";
+          }, 2000);
+        }
+      } catch (error) {
+        showLoading(false);
+        showError('register-error', 'فشل إنشاء الحساب. يرجى المحاولة لاحقاً.');
+      }
+    }
+    
+    async function enterAsGuest() {
+      showLoading(true);
+      
+      try {
+        // التحقق كزائر عبر Gemini API
+        const isValid = await verifyWithGemini({});
+        
+        if (isValid) {
+          // توجيه الزائر بعد 2 ثانية
+          setTimeout(() => {
+            window.location.href = "guest.html";
+          }, 2000);
+        }
+      } catch (error) {
+        showLoading(false);
+        showError('login-error', 'فشل الدخول كزائر. يرجى المحاولة لاحقاً.');
+      }
+    }
+    
+    // ============== تهيئة الصفحة ==============
+    document.addEventListener('DOMContentLoaded', () => {
+      // تعيين السنة الحالية
+      document.getElementById('current-year').textContent = new Date().getFullYear();
+      
+      // تذكر البريد الإلكتروني إذا كان محفوظاً
+      const savedEmail = localStorage.getItem('userEmail') || sessionStorage.getItem('userEmail');
+      if (savedEmail) {
+        document.getElementById('login-email').value = savedEmail;
+        document.getElementById('rememberMe').checked = !!localStorage.getItem('userEmail');
+      }
+    });
+  </script>
+</body>
+</html>
