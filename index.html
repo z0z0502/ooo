@@ -12,15 +12,17 @@
       --card: #334155;
       --muted: #94A3B8;
       --text: #F8FAFC;
-      --accent: #10B981;
-      --accent-light: #34D399;
+      --accent: #6366F1;
+      --accent-light: #818CF8;
       --border: #475569;
       --error: #F87171;
       --success: #4ADE80;
       --warning: #FBBF24;
       --creative: #A78BFA;
       --balanced: #60A5FA;
-      --precise: #F59E0B;
+      --precise: #34D399;
+      --deepseek: #10B981;
+      --poe: #F59E0B;
     }
     
     * {
@@ -66,7 +68,7 @@
       width: 36px;
       height: 36px;
       margin-left: 12px;
-      filter: drop-shadow(0 0 5px rgba(16, 185, 129, 0.5));
+      filter: drop-shadow(0 0 5px rgba(99, 102, 241, 0.5));
     }
     
     .sidebar-title {
@@ -127,12 +129,12 @@
     }
     
     .chat-item:hover {
-      background-color: rgba(16, 185, 129, 0.1);
+      background-color: rgba(99, 102, 241, 0.1);
       border-left: 3px solid var(--accent);
     }
     
     .chat-item.active {
-      background-color: rgba(16, 185, 129, 0.2);
+      background-color: rgba(99, 102, 241, 0.2);
       border-left: 3px solid var(--accent);
       font-weight: bold;
     }
@@ -244,6 +246,14 @@
       border-color: var(--precise);
     }
     
+    .mode-btn.deepseek {
+      border-color: var(--deepseek);
+    }
+    
+    .mode-btn.poe {
+      border-color: var(--poe);
+    }
+    
     .mode-btn.active {
       font-weight: bold;
     }
@@ -261,6 +271,16 @@
     .mode-btn.active.precise {
       background-color: var(--precise);
       color: #064E3B;
+    }
+    
+    .mode-btn.active.deepseek {
+      background-color: var(--deepseek);
+      color: #064E3B;
+    }
+    
+    .mode-btn.active.poe {
+      background-color: var(--poe);
+      color: #78350F;
     }
     
     .chat-container {
@@ -395,7 +415,7 @@
     textarea:focus {
       outline: none;
       border-color: var(--accent);
-      box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.3);
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.3);
     }
     
     .input-actions {
@@ -575,7 +595,7 @@
     <!-- الشريط الجانبي -->
     <div class="sidebar" id="sidebar">
       <div class="sidebar-header">
-        <img src="https://www.deepseek.com/favicon.ico" alt="شعار أورنمو" class="sidebar-logo">
+        <img src="https://www.gstatic.com/lamda/images/gemini_sparkle_v002_d4735304ff6292a690345.svg" alt="شعار أورنمو" class="sidebar-logo">
         <div class="sidebar-title">أورنمو</div>
       </div>
       
@@ -615,9 +635,12 @@
         
         <div class="model-selector">
           <select id="model">
-            <option value="deepseek-chat">DeepSeek Chat</option>
-            <option value="deepseek-coder">DeepSeek Coder</option>
-            <option value="deepseek-law">DeepSeek Law</option>
+            <option value="gemini-2.5-pro">Gemini 2.5 Pro</option>
+            <option value="gemini-2.5-flash">Gemini 2.5 Flash</option>
+            <option value="gemini-2.5-ultra">Gemini 2.5 Ultra</option>
+            <option value="deepseek-v3">DeepSeek V3</option>
+            <option value="poe-claude-3">Poe - Claude 3</option>
+            <option value="poe-gpt-4">Poe - GPT-4</option>
           </select>
         </div>
         
@@ -630,6 +653,12 @@
           </button>
           <button class="mode-btn precise" data-mode="precise">
             <i class="fas fa-bullseye"></i> دقيق
+          </button>
+          <button class="mode-btn deepseek" data-mode="deepseek">
+            <i class="fas fa-brain"></i> DeepSeek
+          </button>
+          <button class="mode-btn poe" data-mode="poe">
+            <i class="fab fa-pied-piper-alt"></i> Poe
           </button>
         </div>
       </div>
@@ -647,6 +676,13 @@
           </div>
           <div class="message-content">
             مرحباً! أنا مساعدك القانوني الذكي من نظام أورنمو - منبع القانون. كيف يمكنني مساعدتك اليوم؟
+            <br><br>
+            يمكنك اختيار نموذج الذكاء الاصطناعي المناسب من القائمة أعلاه:
+            <ul>
+              <li><strong>Gemini</strong>: نماذج جوجل المتقدمة</li>
+              <li><strong>DeepSeek</strong>: نموذج متخصص في البحث العميق</li>
+              <li><strong>Poe</strong>: منصة متعددة النماذج من Quora</li>
+            </ul>
           </div>
         </div>
       </div>
@@ -683,12 +719,17 @@
   </div>
 
   <script>
-    // ============== المفتاح المضمن ==============
-    const DEEPSEEK_API_KEY = "sk-131c1199d14b45918b7ee661848089bd"; // 🔴 استبدل هذا بمفتاح DeepSeek API الفعلي
+    // ============== المفاتيح المضمنة ==============
+    const API_KEYS = {
+      GEMINI: "AIzaSyByCQGeLs10jLqqdJvFK3tBIregPGadou4", // 🔴 استبدل بمفتاح Gemini الفعلي
+      DEEPSEEK: "sk-131c1199d14b45918b7ee661848089bd", // 🔴 استبدل بمفتاح DeepSeek الفعلي
+      POE: "SfOCj8yrXF4cH-gGvS08Ssq65F1tsncqp8HZRBRdngM" // 🔴 استبدل بمفتاح Poe الفعلي
+    };
     
     // ============== إدارة الحالة ==============
     let currentState = {
       activeChat: '1',
+      activeMode: 'balanced',
       chats: {
         '1': {
           id: '1',
@@ -696,7 +737,7 @@
           messages: [
             {
               role: 'bot',
-              content: 'مرحباً! أنا مساعدك القانوني الذكي من نظام أورنمو - منبع القانون. كيف يمكنني مساعدتك اليوم؟',
+              content: 'مرحباً! أنا مساعدك القانوني الذكي من نظام أورنمو - منبع القانون. كيف يمكنني مساعدتك اليوم؟\n\nيمكنك اختيار نموذج الذكاء الاصطناعي المناسب من القائمة أعلاه:\n- Gemini: نماذج جوجل المتقدمة\n- DeepSeek: نموذج متخصص في البحث العميق\n- Poe: منصة متعددة النماذج من Quora',
               time: new Date().toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit' })
             }
           ],
@@ -989,58 +1030,154 @@
       submitBtn.disabled = true;
     }
     
-    // ============== اتصال DeepSeek API ==============
-    async function callDeepSeekAPI(model, prompt, file) {
+    // ============== اتصالات API ==============
+    async function callAIAPI(model, prompt, file) {
       try {
         showLoading(true);
         
         // إضافة رسالة المستخدم أولاً
         addMessage(currentState.activeChat, 'user', prompt);
         
-        const endpoint = "https://api.deepseek.com/v1/chat/completions";
+        let result;
         
-        const requestBody = {
-          model: model,
-          messages: [
-            {
-              role: "user",
-              content: prompt
-            }
-          ],
-          temperature: 0.7,
-          max_tokens: 2000,
-          stream: false
-        };
-        
-        // إذا كان هناك ملف مرفق
-        if (file) {
-          // هنا يجب إضافة كود لمعالجة الملف وإضافته إلى requestBody
-          // هذا مثال مبسط فقط
-          requestBody.messages[0].content += `\n[ملف مرفق: ${file.name}]`;
+        // تحديد API المناسب بناءً على النموذج المختار
+        if (model.startsWith('gemini')) {
+          result = await callGeminiAPI(model, prompt, file);
+        } else if (model.startsWith('deepseek')) {
+          result = await callDeepSeekAPI(prompt, file);
+        } else if (model.startsWith('poe')) {
+          result = await callPoeAPI(model, prompt, file);
+        } else {
+          throw new Error('نموذج غير معروف');
         }
         
-        const response = await fetch(endpoint, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${DEEPSEEK_API_KEY}`
-          },
-          body: JSON.stringify(requestBody)
-        });
-        
-        if (!response.ok) {
-          const errorData = await response.json();
-          throw new Error(errorData.error?.message || `خطأ في الاتصال: ${response.status}`);
-        }
-        
-        const data = await response.json();
-        return data.choices[0].message.content || 'لا يوجد نص في الاستجابة';
+        return result;
       } catch (error) {
         console.error('Error:', error);
         throw error;
       } finally {
         showLoading(false);
       }
+    }
+    
+    async function callGeminiAPI(model, prompt, file) {
+      const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${API_KEYS.GEMINI}`;
+      
+      const requestBody = {
+        contents: [{
+          parts: [{
+            text: prompt
+          }]
+        }]
+      };
+      
+      // إذا كان هناك ملف مرفق
+      if (file) {
+        requestBody.contents[0].parts.push({
+          file_data: {
+            mime_type: file.type,
+            file_name: file.name,
+            data: await toBase64(file)
+          }
+        });
+      }
+      
+      const response = await fetch(endpoint, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(requestBody)
+      });
+      
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error?.message || `خطأ في الاتصال: ${response.status}`);
+      }
+      
+      const data = await response.json();
+      return data?.candidates?.[0]?.content?.parts?.[0]?.text || 'لا يوجد نص في الاستجابة';
+    }
+    
+    async function callDeepSeekAPI(prompt, file) {
+      const endpoint = "https://api.deepseek.com/v1/chat/completions";
+      
+      const requestBody = {
+        model: "deepseek-chat",
+        messages: [{
+          role: "user",
+          content: prompt
+        }],
+        temperature: 0.7
+      };
+      
+      // إذا كان هناك ملف مرفق
+      if (file) {
+        requestBody.messages[0].content += `\n[ملف مرفق: ${file.name}]`;
+        // هنا يمكنك إضافة معالجة الملف إذا كان API يدعمه
+      }
+      
+      const response = await fetch(endpoint, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${API_KEYS.DEEPSEEK}`
+        },
+        body: JSON.stringify(requestBody)
+      });
+      
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error?.message || `خطأ في الاتصال: ${response.status}`);
+      }
+      
+      const data = await response.json();
+      return data?.choices?.[0]?.message?.content || 'لا يوجد نص في الاستجابة';
+    }
+    
+    async function callPoeAPI(model, prompt, file) {
+      let poeModel;
+      if (model === 'poe-claude-3') {
+        poeModel = 'claude-3-opus';
+      } else if (model === 'poe-gpt-4') {
+        poeModel = 'gpt-4';
+      } else {
+        throw new Error('نموذج Poe غير معروف');
+      }
+      
+      const endpoint = "https://api.poe.com/v1/chat/completions";
+      
+      const requestBody = {
+        model: poeModel,
+        messages: [{
+          role: "user",
+          content: prompt
+        }],
+        temperature: 0.7
+      };
+      
+      // إذا كان هناك ملف مرفق
+      if (file) {
+        requestBody.messages[0].content += `\n[ملف مرفق: ${file.name}]`;
+        // هنا يمكنك إضافة معالجة الملف إذا كان API يدعمه
+      }
+      
+      const response = await fetch(endpoint, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${API_KEYS.POE}`
+        },
+        body: JSON.stringify(requestBody)
+      });
+      
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error?.message || `خطأ في الاتصال: ${response.status}`);
+      }
+      
+      const data = await response.json();
+      return data?.choices?.[0]?.message?.content || 'لا يوجد نص في الاستجابة';
     }
     
     function toBase64(file) {
@@ -1064,7 +1201,7 @@
       }
       
       try {
-        const result = await callDeepSeekAPI(model, prompt, currentFile);
+        const result = await callAIAPI(model, prompt, currentFile);
         addMessage(currentState.activeChat, 'bot', result);
         
         // تحديث عنوان المحادثة إذا كانت جديدة
@@ -1128,14 +1265,22 @@
       btn.addEventListener('click', () => {
         modeButtons.forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
+        currentState.activeMode = btn.dataset.mode;
         
-        // هنا يمكنك تغيير إعدادات النموذج بناءً على الوضع المختار
-        const temperatureMap = {
-          'creative': 0.9,
-          'balanced': 0.7,
-          'precise': 0.3
-        };
-        // يمكن استخدام temperatureMap[btn.dataset.mode] عند الاتصال بالAPI
+        // تغيير النموذج بناءً على الوضع المختار
+        switch(currentState.activeMode) {
+          case 'deepseek':
+            modelInput.value = 'deepseek-v3';
+            break;
+          case 'poe':
+            modelInput.value = 'poe-claude-3';
+            break;
+          case 'creative':
+          case 'balanced':
+          case 'precise':
+            modelInput.value = 'gemini-2.5-pro';
+            break;
+        }
       });
     });
     
